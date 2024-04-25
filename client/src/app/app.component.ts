@@ -2,11 +2,13 @@ import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { EmployeesListComponent } from './employees-list/employees-list.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { WeatherWidgetComponent } from './weather-widget/weather-widget.component'; 
+
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, EmployeesListComponent, MatToolbarModule],
+  imports: [RouterOutlet, EmployeesListComponent, MatToolbarModule, WeatherWidgetComponent],
   styles: [
     `
       main {
@@ -22,6 +24,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     </mat-toolbar>
     <main>
       <router-outlet />
+      <app-weather-widget></app-weather-widget>
     </main>
   `,
 })
