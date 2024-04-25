@@ -4,10 +4,10 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatButtonModule } from '@angular/material/button';
-import { Employee } from '../employee';
+import { Task } from '../task';
 
 @Component({
-  selector: 'app-employee-form',
+  selector: 'app-task-form',
   standalone: true,
   imports: [
     ReactiveFormsModule,
@@ -17,7 +17,7 @@ import { Employee } from '../employee';
     MatButtonModule,
   ],
   styles: `
-    .employee-form {
+    .task-form {
       display: flex;
       flex-direction: column;
       align-items: flex-start;
@@ -32,9 +32,9 @@ import { Employee } from '../employee';
   `,
   template: `
     <form
-      class="employee-form"
+      class="task-form"
       autocomplete="off"
-      [formGroup]="employeeForm"
+      [formGroup]="taskForm"
       (submit)="submitForm()"
     >
       <mat-form-field>
@@ -46,27 +46,27 @@ import { Employee } from '../employee';
       </mat-form-field>
 
       <mat-form-field>
-        <mat-label>Position</mat-label>
+        <mat-label>Priority</mat-label>
         <input
           matInput
-          placeholder="Position"
-          formControlName="position"
+          placeholder="Priority"
+          formControlName="priority"
           required
         />
-        @if (position.invalid) {
-        <mat-error>Position must be at least 5 characters long.</mat-error>
+        @if (priority.invalid) {
+        <mat-error>Priority must be at least 1 character long.</mat-error>
         }
       </mat-form-field>
 
       <mat-radio-group formControlName="level" aria-label="Select an option">
-        <mat-radio-button name="level" value="junior" required
-          >Junior</mat-radio-button
+        <mat-radio-button name="level" value="low" required
+          >Low</mat-radio-button
         >
-        <mat-radio-button name="level" value="mid"
-          >Mid</mat-radio-button
+        <mat-radio-button name="level" value="medium"
+          >Medium</mat-radio-button
         >
-        <mat-radio-button name="level" value="senior"
-          >Senior</mat-radio-button
+        <mat-radio-button name="level" value="high"
+          >High</mat-radio-button
         >
       </mat-radio-group>
       <br />
@@ -74,49 +74,49 @@ import { Employee } from '../employee';
         mat-raised-button
         color="primary"
         type="submit"
-        [disabled]="employeeForm.invalid"
+        [disabled]="taskForm.invalid"
       >
         Add
       </button>
     </form>
   `,
 })
-export class EmployeeFormComponent {
-  initialState = input<Employee>();
+export class TaskFormComponent {
+  initialState = input<Task>();
 
   @Output()
-  formValuesChanged = new EventEmitter<Employee>();
+  formValuesChanged = new EventEmitter<Task>();
 
   @Output()
-  formSubmitted = new EventEmitter<Employee>();
+  formSubmitted = new EventEmitter<Task>();
 
-  employeeForm = this.formBuilder.group({
+  taskForm = this.formBuilder.group({
     name: ['', [Validators.required, Validators.minLength(3)]],
-    position: ['', [Validators.required, Validators.minLength(5)]],
-    level: ['junior', [Validators.required]],
+    priority: ['', [Validators.required, Validators.minLength(1)]],
+    level: ['low', [Validators.required]],
   });
 
   constructor(private formBuilder: FormBuilder) {
     effect(() => {
-      this.employeeForm.setValue({
+      this.taskForm.setValue({
         name: this.initialState()?.name || '',
-        position: this.initialState()?.position || '',
-        level: this.initialState()?.level || 'junior',
+        priority: this.initialState()?.priority || '',
+        level: this.initialState()?.level || 'low',
       });
     });
   }
 
   get name() {
-    return this.employeeForm.get('name')!;
+    return this.taskForm.get('name')!;
   }
-  get position() {
-    return this.employeeForm.get('position')!;
+  get priority() {
+    return this.taskForm.get('priority')!;
   }
   get level() {
-    return this.employeeForm.get('level')!;
+    return this.taskForm.get('level')!;
   }
 
   submitForm() {
-    this.formSubmitted.emit(this.employeeForm.value as Employee);
+    this.formSubmitted.emit(this.taskForm.value as Task);
   }
 }

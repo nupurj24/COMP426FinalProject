@@ -1,8 +1,8 @@
 import * as mongodb from "mongodb";
-import { Employee } from "./employee";
+import { Task } from "./task";
 
 export const collections: {
-    employees?: mongodb.Collection<Employee>;
+    tasks?: mongodb.Collection<Task>;
 } = {};
 
 export async function connectToDatabase(uri: string) {
@@ -12,17 +12,15 @@ export async function connectToDatabase(uri: string) {
     const db = client.db("meanStackExample");
     await applySchemaValidation(db);
 
-    const employeesCollection = db.collection<Employee>("employees");
-    collections.employees = employeesCollection;
+    const tasksCollection = db.collection<Task>("tasks");
+    collections.tasks = tasksCollection;
 }
 
-// Update our existing collection with JSON schema validation so we know our documents will always match the shape of our Employee model, even if added elsewhere.
-// For more information about schema validation, see this blog series: https://www.mongodb.com/blog/post/json-schema-validation--locking-down-your-model-the-smart-way
 async function applySchemaValidation(db: mongodb.Db) {
     const jsonSchema = {
         $jsonSchema: {
             bsonType: "object",
-            required: ["name", "position", "level"],
+            required: ["name", "priority", "level"],
             additionalProperties: false,
             properties: {
                 _id: {},
@@ -30,27 +28,26 @@ async function applySchemaValidation(db: mongodb.Db) {
                     bsonType: "string",
                     description: "'name' is required and is a string",
                 },
-                position: {
+                priority: {
                     bsonType: "string",
-                    description: "'position' is required and is a string",
-                    minLength: 5
+                    description: "'priority' is required and is a string",
+                    minLength: 1
                 },
                 level: {
                     bsonType: "string",
-                    description: "'level' is required and is one of 'junior', 'mid', or 'senior'",
-                    enum: ["junior", "mid", "senior"],
+                    description: "'level' is required and is one of 'low', 'medium', or 'high'",
+                    enum: ["low", "medium", "high"],
                 },
             },
         },
     };
 
-    // Try applying the modification to the collection, if the collection doesn't exist, create it
    await db.command({
-        collMod: "employees",
+        collMod: "tasks",
         validator: jsonSchema
     }).catch(async (error: mongodb.MongoServerError) => {
         if (error.codeName === "NamespaceNotFound") {
-            await db.createCollection("employees", {validator: jsonSchema});
+            await db.createCollection("tasks", {validator: jsonSchema});
         }
     });
 }

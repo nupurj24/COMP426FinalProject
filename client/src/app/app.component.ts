@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { EmployeesListComponent } from './employees-list/employees-list.component';
+import { TasksListComponent } from './tasks-list/tasks-list.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { WeatherWidgetComponent } from './weather-widget/weather-widget.component'; 
 
@@ -8,7 +8,7 @@ import { WeatherWidgetComponent } from './weather-widget/weather-widget.componen
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, EmployeesListComponent, MatToolbarModule, WeatherWidgetComponent],
+  imports: [RouterOutlet, TasksListComponent, MatToolbarModule, WeatherWidgetComponent],
   styles: [
     `
       main {
@@ -20,7 +20,7 @@ import { WeatherWidgetComponent } from './weather-widget/weather-widget.componen
   ],
   template: `
     <mat-toolbar>
-      <span>Employees Management System</span>
+      <span>Tar Heel Task Tracker</span>
     </mat-toolbar>
     <main>
       <router-outlet />

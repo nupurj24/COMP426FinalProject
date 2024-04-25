@@ -1,13 +1,13 @@
 import { Component, OnInit, WritableSignal } from '@angular/core';
-import { Employee } from '../employee';
-import { EmployeeService } from '../employee.service';
+import { Task } from '../task';
+import { TaskService } from '../task.service';
 import { RouterModule } from '@angular/router';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 
 @Component({
-  selector: 'app-employees-list',
+  selector: 'app-tasks-list',
   standalone: true,
   imports: [RouterModule, MatTableModule, MatButtonModule, MatCardModule],
   styles: [
@@ -24,17 +24,17 @@ import { MatCardModule } from '@angular/material/card';
   template: `
     <mat-card>
       <mat-card-header>
-        <mat-card-title>Employees List</mat-card-title>
+        <mat-card-title>Tasks List</mat-card-title>
       </mat-card-header>
       <mat-card-content>
-        <table mat-table [dataSource]="employees$()">
+        <table mat-table [dataSource]="tasks$()">
           <ng-container matColumnDef="col-name">
             <th mat-header-cell *matHeaderCellDef>Name</th>
             <td mat-cell *matCellDef="let element">{{ element.name }}</td>
           </ng-container>
-          <ng-container matColumnDef="col-position">
-            <th mat-header-cell *matHeaderCellDef>Position</th>
-            <td mat-cell *matCellDef="let element">{{ element.position }}</td>
+          <ng-container matColumnDef="col-priority">
+            <th mat-header-cell *matHeaderCellDef>Priority</th>
+            <td mat-cell *matCellDef="let element">{{ element.priority }}</td>
           </ng-container>
           <ng-container matColumnDef="col-level">
             <th mat-header-cell *matHeaderCellDef>Level</th>
@@ -49,7 +49,7 @@ import { MatCardModule } from '@angular/material/card';
               <button
                 mat-raised-button
                 color="warn"
-                (click)="deleteEmployee(element._id || '')"
+                (click)="deleteTask(element._id || '')"
               >
                 Delete
               </button>
@@ -62,35 +62,35 @@ import { MatCardModule } from '@angular/material/card';
       </mat-card-content>
       <mat-card-actions>
         <button mat-raised-button color="primary" [routerLink]="['new']">
-          Add a New Employee
+          Add a New Task
         </button>
       </mat-card-actions>
     </mat-card>
   `,
 })
-export class EmployeesListComponent implements OnInit {
-  employees$ = {} as WritableSignal<Employee[]>;
+export class TasksListComponent implements OnInit {
+  tasks$ = {} as WritableSignal<Task[]>;
   displayedColumns: string[] = [
     'col-name',
-    'col-position',
+    'col-priority',
     'col-level',
     'col-action',
   ];
 
-  constructor(private employeesService: EmployeeService) {}
+  constructor(private tasksService: TaskService) {}
 
   ngOnInit() {
-    this.fetchEmployees();
+    this.fetchTasks();
   }
 
-  deleteEmployee(id: string): void {
-    this.employeesService.deleteEmployee(id).subscribe({
-      next: () => this.fetchEmployees(),
+  deleteTask(id: string): void {
+    this.tasksService.deleteTask(id).subscribe({
+      next: () => this.fetchTasks(),
     });
   }
 
-  private fetchEmployees(): void {
-    this.employees$ = this.employeesService.employees$;
-    this.employeesService.getEmployees();
+  private fetchTasks(): void {
+    this.tasks$ = this.tasksService.tasks$;
+    this.tasksService.getTasks();
   }
 }
