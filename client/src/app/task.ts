@@ -1,6 +1,6 @@
 export interface Task {
-    name: string;
-    priority: string;
+    title: string;
+    description: string;
     level: 'low' | 'medium' | 'high';
     _id?: string;
   }

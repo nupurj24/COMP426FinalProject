@@ -38,23 +38,23 @@ import { Task } from '../task';
       (submit)="submitForm()"
     >
       <mat-form-field>
-        <mat-label>Name</mat-label>
-        <input matInput placeholder="Name" formControlName="name" required />
-        @if (name.invalid) {
-        <mat-error>Name must be at least 3 characters long.</mat-error>
+        <mat-label>Title</mat-label>
+        <input matInput placeholder="Title" formControlName="title" required />
+        @if (title.invalid) {
+        <mat-error>Title must be at least 3 characters long.</mat-error>
         }
       </mat-form-field>
 
       <mat-form-field>
-        <mat-label>Priority</mat-label>
+        <mat-label>Description</mat-label>
         <input
           matInput
-          placeholder="Priority"
-          formControlName="priority"
+          placeholder="Description"
+          formControlName="description"
           required
         />
-        @if (priority.invalid) {
-        <mat-error>Priority must be at least 1 character long.</mat-error>
+        @if (description.invalid) {
+        <mat-error>Desc. must be at least 1 character long.</mat-error>
         }
       </mat-form-field>
 
@@ -91,26 +91,26 @@ export class TaskFormComponent {
   formSubmitted = new EventEmitter<Task>();
 
   taskForm = this.formBuilder.group({
-    name: ['', [Validators.required, Validators.minLength(3)]],
-    priority: ['', [Validators.required, Validators.minLength(1)]],
+    title: ['', [Validators.required, Validators.minLength(3)]],
+    description: ['', [Validators.required, Validators.minLength(1)]],
     level: ['low', [Validators.required]],
   });
 
   constructor(private formBuilder: FormBuilder) {
     effect(() => {
       this.taskForm.setValue({
-        name: this.initialState()?.name || '',
-        priority: this.initialState()?.priority || '',
+        title: this.initialState()?.title || '',
+        description: this.initialState()?.description || '',
         level: this.initialState()?.level || 'low',
       });
     });
   }
 
-  get name() {
-    return this.taskForm.get('name')!;
+  get title() {
+    return this.taskForm.get('title')!;
   }
-  get priority() {
-    return this.taskForm.get('priority')!;
+  get description() {
+    return this.taskForm.get('description')!;
   }
   get level() {
     return this.taskForm.get('level')!;

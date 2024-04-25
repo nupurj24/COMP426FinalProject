@@ -20,17 +20,17 @@ async function applySchemaValidation(db: mongodb.Db) {
     const jsonSchema = {
         $jsonSchema: {
             bsonType: "object",
-            required: ["name", "priority", "level"],
+            required: ["title", "description", "level"],
             additionalProperties: false,
             properties: {
                 _id: {},
-                name: {
+                title: {
                     bsonType: "string",
-                    description: "'name' is required and is a string",
+                    description: "'title' is required and is a string",
                 },
-                priority: {
+                description: {
                     bsonType: "string",
-                    description: "'priority' is required and is a string",
+                    description: "'description' is required and is a string",
                     minLength: 1
                 },
                 level: {

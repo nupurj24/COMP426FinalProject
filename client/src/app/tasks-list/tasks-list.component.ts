@@ -28,13 +28,13 @@ import { MatCardModule } from '@angular/material/card';
       </mat-card-header>
       <mat-card-content>
         <table mat-table [dataSource]="tasks$()">
-          <ng-container matColumnDef="col-name">
-            <th mat-header-cell *matHeaderCellDef>Name</th>
-            <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+          <ng-container matColumnDef="col-title">
+            <th mat-header-cell *matHeaderCellDef>Title</th>
+            <td mat-cell *matCellDef="let element">{{ element.title }}</td>
           </ng-container>
-          <ng-container matColumnDef="col-priority">
-            <th mat-header-cell *matHeaderCellDef>Priority</th>
-            <td mat-cell *matCellDef="let element">{{ element.priority }}</td>
+          <ng-container matColumnDef="col-description">
+            <th mat-header-cell *matHeaderCellDef>Description</th>
+            <td mat-cell *matCellDef="let element">{{ element.description }}</td>
           </ng-container>
           <ng-container matColumnDef="col-level">
             <th mat-header-cell *matHeaderCellDef>Level</th>
@@ -71,8 +71,8 @@ import { MatCardModule } from '@angular/material/card';
 export class TasksListComponent implements OnInit {
   tasks$ = {} as WritableSignal<Task[]>;
   displayedColumns: string[] = [
-    'col-name',
-    'col-priority',
+    'col-title',
+    'col-description',
     'col-level',
     'col-action',
   ];
