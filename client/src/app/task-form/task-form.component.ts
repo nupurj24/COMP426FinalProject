@@ -4,6 +4,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatButtonModule } from '@angular/material/button';
+import { RouterLink } from '@angular/router';
 import { Task } from '../task';
 
 @Component({
@@ -15,6 +16,7 @@ import { Task } from '../task';
     MatInputModule,
     MatRadioModule,
     MatButtonModule,
+    RouterLink
   ],
   styles: `
     .task-form {
@@ -78,6 +80,9 @@ import { Task } from '../task';
       >
         Add
       </button>
+      <br />
+      <button class="nav-item nav-link-edit" [routerLink]="['']" mat-raised-button
+      color="gray" >Back to Task List</button >
     </form>
   `,
 })
