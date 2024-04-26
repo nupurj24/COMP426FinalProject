@@ -80,8 +80,8 @@ import { Task } from '../task';
       >
         Add
       </button>
-      <br />
-      <button class="nav-item nav-link-edit" [routerLink]="['']" mat-raised-button
+      <br/>
+      <button id="gohome" class="nav-item nav-link-edit" [routerLink]="['']" mat-raised-button
       color="gray" >Back to Task List</button >
     </form>
   `,
