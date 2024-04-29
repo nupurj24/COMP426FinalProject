@@ -59,7 +59,8 @@ import { Task } from '../task';
         <mat-error>Desc. must be at least 1 character long.</mat-error>
         }
       </mat-form-field>
-
+      <div> </div>
+      <p>Select Priority:</p>
       <mat-radio-group formControlName="level" aria-label="Select an option">
         <mat-radio-button name="level" value="low" required
           >Low</mat-radio-button
